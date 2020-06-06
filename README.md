@@ -1,3 +1,3 @@
 # Player
 
-A description of this package.
+Amadeus Player
