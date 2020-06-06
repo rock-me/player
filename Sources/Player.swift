@@ -16,6 +16,6 @@ public final class Player {
     }
     
     private func next() {
-        track.value = Album.tra
+        track.value = Album.melancholy.tracks[1]
     }
 }
