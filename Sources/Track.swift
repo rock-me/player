@@ -31,4 +31,16 @@ public enum Track: UInt8, CaseIterable, Codable {
         default: return 120
         }
     }
+    
+    public var composer: String {
+        "track_\(self)_composer"
+    }
+    
+    public var title: String {
+        "track_\(self)_title"
+    }
+    
+    public var file: String {
+        "\(self)"
+    }
 }
