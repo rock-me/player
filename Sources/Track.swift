@@ -3,8 +3,6 @@ import Foundation
 public enum Track: UInt8, CaseIterable, Codable {
     case
     satieGymnopedies,
-    beethovenMoonlightSonata,
-    debussyClairDeLune,
     mozartSymphony40,
     mozartEineKleineNachtmusik,
     mozartPrague,
@@ -15,6 +13,8 @@ public enum Track: UInt8, CaseIterable, Codable {
     mozartPianoConcerto20,
     mozartElviraMadigan,
     mozartPianoConcerto22,
+    mozartFantasia,
+    beethovenMoonlightSonata,
     beethovenPathetique,
     beethovenSymphony2,
     beethovenSymphony9,
@@ -22,9 +22,9 @@ public enum Track: UInt8, CaseIterable, Codable {
     beethovenPianoConcerto3,
     beethovenSymphony7,
     beethovenSymphony5,
-    mozartFantasia,
     beethovenFurElise,
-    brahmsSymphony3
+    brahmsSymphony3,
+    debussyClairDeLune
     
     var duration: TimeInterval {
         switch self {

@@ -44,4 +44,40 @@ final class TrackEndTests: XCTestCase {
         player.trackEnds()
         waitForExpectations(timeout: 1)
     }
+    
+    func testNextTake2() {
+        let expect = expectation(description: "")
+        player.config.value.trackEnds = .next
+        player.track.value = Album.mists.tracks[0]
+        player.track.sink {
+            guard $0 == Album.mists.tracks[1] else { return }
+            expect.fulfill()
+        }.store(in: &subs)
+        player.trackEnds()
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testNextTake3() {
+        let expect = expectation(description: "")
+        player.config.value.trackEnds = .next
+        player.track.value = Album.mists.tracks[Album.mists.tracks.count - 2]
+        player.track.sink {
+            guard $0 == Album.mists.tracks[Album.mists.tracks.count - 1] else { return }
+            expect.fulfill()
+        }.store(in: &subs)
+        player.trackEnds()
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testNextLastIndex() {
+        let expect = expectation(description: "")
+        player.config.value.trackEnds = .next
+        player.config.value.albumEnds = .stop
+        player.track.value = Album.mists.tracks[Album.mists.tracks.count - 1]
+        player.track.sink { _ in
+            expect.fulfill()
+        }.store(in: &subs)
+        player.trackEnds()
+        waitForExpectations(timeout: 1)
+    }
 }
