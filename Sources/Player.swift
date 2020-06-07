@@ -19,7 +19,12 @@ public final class Player {
             track.value = Album.allCases.first { $0.tracks.contains(track.value) }.map { album in
                 album.tracks[(0 ..< album.tracks.count).filter { $0 != album.tracks.firstIndex(of: track.value) }.randomElement()!]
             }!
-        case .album: break
+        case .album:
+            Album.allCases.first { $0.tracks.contains(track.value) }.map { album in
+                Album.allCases.filter { $0 != album }.filter { config.value.purchases.contains($0.purchase) }.randomElement().map {
+                    track.value = $0.tracks.randomElement()!
+                }
+            }
         }
     }
     
