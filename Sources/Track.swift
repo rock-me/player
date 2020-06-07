@@ -26,7 +26,7 @@ public enum Track: UInt8, CaseIterable, Codable {
     brahmsSymphony3,
     debussyClairDeLune
     
-    var duration: TimeInterval {
+    public var duration: TimeInterval {
         switch self {
         default: return 120
         }

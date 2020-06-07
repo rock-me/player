@@ -7,7 +7,7 @@ public enum Album: UInt8, Codable, CaseIterable {
     tension,
     dawn
     
-    var tracks: [Track] {
+    public var tracks: [Track] {
         switch self {
         case .mists: return [
             .satieGymnopedies,
@@ -39,7 +39,7 @@ public enum Album: UInt8, Codable, CaseIterable {
         }
     }
     
-    var purchase: String {
+    public var purchase: String {
         "rock.me.album.\(self)"
     }
 }

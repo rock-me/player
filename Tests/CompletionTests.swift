@@ -1,5 +1,5 @@
 import XCTest
-@testable import Player
+import Player
 
 final class CompletionTests: XCTestCase {
     func testTracks() {

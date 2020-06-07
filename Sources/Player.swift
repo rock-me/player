@@ -8,10 +8,18 @@ public final class Player {
     public init() { }
     
     public func trackEnds() {
-        switch config.value.trackEnds {
-        case .stop: break
-        case .loop: track.value = track.value
-        case .next: nextTrack()
+        switch config.value.random {
+        case .none:
+            switch config.value.trackEnds {
+            case .stop: break
+            case .loop: track.value = track.value
+            case .next: nextTrack()
+            }
+        case .track:
+            track.value = Album.allCases.first { $0.tracks.contains(track.value) }.map { album in
+                album.tracks[(0 ..< album.tracks.count).filter { $0 != album.tracks.firstIndex(of: track.value) }.randomElement()!]
+            }!
+        case .album: break
         }
     }
     

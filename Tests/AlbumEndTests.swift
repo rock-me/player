@@ -1,6 +1,6 @@
 import XCTest
 import Combine
-@testable import Player
+import Player
 
 final class AlbumEndTests: XCTestCase {
     private var player: Player!
