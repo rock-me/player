@@ -39,7 +39,19 @@ public enum Album: UInt8, Codable, CaseIterable {
         }
     }
     
+    public var duration: TimeInterval {
+        tracks.map(\.duration).reduce(0, +)
+    }
+    
     public var purchase: String {
         "rock.me.album.\(self)"
+    }
+    
+    public var title: String {
+        "album_\(self)_title"
+    }
+    
+    public var subtitle: String {
+        "album_\(self)_subtitle"
     }
 }
