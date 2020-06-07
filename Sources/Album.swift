@@ -54,4 +54,8 @@ public enum Album: UInt8, Codable, CaseIterable {
     public var subtitle: String {
         "album_\(self)_subtitle"
     }
+    
+    public var cover: String {
+        "album_\(self)"
+    }
 }
