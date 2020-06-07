@@ -38,4 +38,8 @@ public enum Album: UInt8, Codable, CaseIterable {
             .mozartFantasia]
         }
     }
+    
+    var purchase: String {
+        "rock.me.album.\(self)"
+    }
 }

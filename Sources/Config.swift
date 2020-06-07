@@ -3,7 +3,7 @@ import Foundation
 public struct Config: Codable, Equatable {
     public var trackEnds = Heuristic.next
     public var albumEnds = Heuristic.stop
-    public var purchases = Set<String>()
+    public var purchases = Set([Album.mists.purchase])
     public var rated = false
     public let created = Date()
     

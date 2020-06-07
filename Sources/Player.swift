@@ -36,6 +36,14 @@ public final class Player {
     }
     
     private func nextAlbum() {
-        
+        Album.allCases.firstIndex { $0.tracks.contains(track.value) }.map { index in
+            {
+                ($0.first { $0.0 > index } ?? $0.first).map {
+                    track.value = $0.1.tracks[0]
+                }
+            } ((0 ..< Album.allCases.count).compactMap {
+                config.value.purchases.contains(Album.allCases[$0].purchase) ? ($0, Album.allCases[$0]) : nil
+            }.filter { $0.0 != index })
+        }
     }
 }
