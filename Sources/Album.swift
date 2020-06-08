@@ -39,6 +39,10 @@ public enum Album: UInt8, Codable, CaseIterable {
         }
     }
     
+    public var index: Int {
+        Album.allCases.firstIndex(of: self)!
+    }
+    
     public var duration: TimeInterval {
         tracks.map(\.duration).reduce(0, +)
     }
