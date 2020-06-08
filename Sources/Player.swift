@@ -11,6 +11,7 @@ public final class Player {
     public init() {
         track.sink { [weak self] in
             self?.backable.value = $0.index > 0
+            self?.forwardable.value = $0.index < $0.album.tracks.count - 1
         }.store(in: &subs)
     }
     
@@ -18,9 +19,12 @@ public final class Player {
         switch config.value.random {
         case .none:
             switch config.value.trackEnds {
-            case .stop: break
-            case .loop: track.value = track.value
-            case .next: nextTrack()
+            case .stop:
+                break
+            case .loop:
+                track.value = track.value
+            case .next:
+                nextTrack()
             }
         case .track:
             track.value = track.value.album.tracks.filter { $0 != track.value }.randomElement()!
@@ -33,14 +37,17 @@ public final class Player {
     
     private func albumEnds() {
         switch config.value.albumEnds {
-        case .stop: break
-        case .loop: track.value = track.value.album.tracks[0]
-        case .next: nextAlbum()
+        case .stop:
+            break
+        case .loop:
+            track.value = track.value.album.tracks[0]
+        case .next:
+            nextAlbum()
         }
     }
     
     private func nextTrack() {
-        if track.value.index < track.value.album.tracks.count - 1 {
+        if forwardable.value {
             track.value = track.value.album.tracks[track.value.index + 1]
         } else {
             albumEnds()

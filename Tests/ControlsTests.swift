@@ -29,4 +29,24 @@ final class ControlsTests: XCTestCase {
         player.track.value = Album.mists.tracks[1]
         waitForExpectations(timeout: 1)
     }
+    
+    func testForwardableLast() {
+        let expect = expectation(description: "")
+        player.forwardable.dropFirst().sink {
+            XCTAssertFalse($0)
+            expect.fulfill()
+        }.store(in: &subs)
+        player.track.value = Album.mists.tracks.last!
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testForwardablePreviousToLast() {
+        let expect = expectation(description: "")
+        player.forwardable.dropFirst().sink {
+            XCTAssertTrue($0)
+            expect.fulfill()
+        }.store(in: &subs)
+        player.track.value = Album.mists.tracks[Album.mists.tracks.count - 2]
+        waitForExpectations(timeout: 1)
+    }
 }
