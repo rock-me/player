@@ -10,7 +10,7 @@ final class ControlsTests: XCTestCase {
         player = .init()
     }
     
-    func testBackableFirst() {
+    func testPreviousableFirst() {
         let expect = expectation(description: "")
         player.previousable.dropFirst().sink {
             XCTAssertFalse($0)
@@ -20,7 +20,7 @@ final class ControlsTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testBackableSecond() {
+    func testPreviousableSecond() {
         let expect = expectation(description: "")
         player.previousable.dropFirst().sink {
             XCTAssertTrue($0)
@@ -30,7 +30,7 @@ final class ControlsTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testForwardableLast() {
+    func testNextableLast() {
         let expect = expectation(description: "")
         player.nextable.dropFirst().sink {
             XCTAssertFalse($0)
@@ -40,7 +40,7 @@ final class ControlsTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testForwardablePreviousToLast() {
+    func testNextablePreviousToLast() {
         let expect = expectation(description: "")
         player.nextable.dropFirst().sink {
             XCTAssertTrue($0)
@@ -50,7 +50,7 @@ final class ControlsTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testBackwards() {
+    func testPrevious() {
         let expect = expectation(description: "")
         player.track.value = Album.mists.tracks.last!
         player.track.dropFirst().sink {
@@ -61,7 +61,7 @@ final class ControlsTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testForwards() {
+    func testNext() {
         let expect = expectation(description: "")
         player.track.value = Album.mists.tracks.first!
         player.track.dropFirst().sink {
