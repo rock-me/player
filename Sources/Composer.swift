@@ -9,6 +9,6 @@ public enum Composer {
     debussy
     
     public var name: String {
-        "composer_\(self)"
+        "composer_\(self)_name"
     }
 }
