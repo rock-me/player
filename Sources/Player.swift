@@ -35,6 +35,14 @@ public final class Player {
         }
     }
     
+    public func back() {
+        track.value = track.value.previous
+    }
+    
+    public func next() {
+        track.value = track.value.next
+    }
+    
     private func albumEnds() {
         switch config.value.albumEnds {
         case .stop:
@@ -48,7 +56,7 @@ public final class Player {
     
     private func nextTrack() {
         if forwardable.value {
-            track.value = track.value.album.tracks[track.value.index + 1]
+            next()
         } else {
             albumEnds()
         }

@@ -34,6 +34,14 @@ public enum Track: UInt8, CaseIterable, Codable {
         album.tracks.firstIndex(of: self)!
     }
     
+    public var previous: Track {
+        album.tracks[index - 1]
+    }
+    
+    public var next: Track {
+        album.tracks[index + 1]
+    }
+    
     public var composer: Composer {
         switch self {
         case .satieGymnopedies:
