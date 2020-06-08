@@ -16,54 +16,73 @@ final class TrackEndTests: XCTestCase {
         player.track.sink { _ in
             expect.fulfill()
         }.store(in: &subs)
+        player.start.sink {
+            XCTFail()
+        }.store(in: &subs)
         player.trackEnds()
         waitForExpectations(timeout: 1)
     }
     
     func testLoop() {
-        let expect = expectation(description: "")
-        expect.expectedFulfillmentCount = 2
+        let expectTrack = expectation(description: "")
+        let expectStart = expectation(description: "")
+        expectTrack.expectedFulfillmentCount = 2
         player.config.value.trackEnds = .loop
         player.track.value = .mozartEineKleineNachtmusik
         player.track.sink {
             XCTAssertEqual(.mozartEineKleineNachtmusik, $0)
-            expect.fulfill()
+            expectTrack.fulfill()
+        }.store(in: &subs)
+        player.start.sink {
+            expectStart.fulfill()
         }.store(in: &subs)
         player.trackEnds()
         waitForExpectations(timeout: 1)
     }
     
     func testNext() {
-        let expect = expectation(description: "")
+        let expectTrack = expectation(description: "")
+        let expectStart = expectation(description: "")
         player.config.value.trackEnds = .next
         player.track.value = Album.melancholy.tracks[0]
         player.track.sink {
             guard $0 == Album.melancholy.tracks[1] else { return }
-            expect.fulfill()
+            expectTrack.fulfill()
+        }.store(in: &subs)
+        player.start.sink {
+            expectStart.fulfill()
         }.store(in: &subs)
         player.trackEnds()
         waitForExpectations(timeout: 1)
     }
     
     func testNextTake2() {
-        let expect = expectation(description: "")
+        let expectTrack = expectation(description: "")
+        let expectStart = expectation(description: "")
         player.config.value.trackEnds = .next
         player.track.value = Album.mists.tracks[0]
         player.track.sink {
             guard $0 == Album.mists.tracks[1] else { return }
-            expect.fulfill()
+            expectTrack.fulfill()
+        }.store(in: &subs)
+        player.start.sink {
+            expectStart.fulfill()
         }.store(in: &subs)
         player.trackEnds()
         waitForExpectations(timeout: 1)
     }
     
     func testNextTake3() {
-        let expect = expectation(description: "")
+        let expectTrack = expectation(description: "")
+        let expectStart = expectation(description: "")
         player.config.value.trackEnds = .next
         player.track.value = Album.mists.tracks[Album.mists.tracks.count - 2]
         player.track.sink {
             guard $0 == Album.mists.tracks[Album.mists.tracks.count - 1] else { return }
-            expect.fulfill()
+            expectTrack.fulfill()
+        }.store(in: &subs)
+        player.start.sink {
+            expectStart.fulfill()
         }.store(in: &subs)
         player.trackEnds()
         waitForExpectations(timeout: 1)
@@ -76,6 +95,9 @@ final class TrackEndTests: XCTestCase {
         player.track.value = Album.mists.tracks[Album.mists.tracks.count - 1]
         player.track.sink { _ in
             expect.fulfill()
+        }.store(in: &subs)
+        player.start.sink {
+            XCTFail()
         }.store(in: &subs)
         player.trackEnds()
         waitForExpectations(timeout: 1)

@@ -11,15 +11,20 @@ final class RandomTests: XCTestCase {
     }
     
     func testTrack() {
-        let expect = expectation(description: "")
+        let expectTrack = expectation(description: "")
+        let expectStart = expectation(description: "")
         var prev = Album.mists.tracks.last!
-        expect.expectedFulfillmentCount = 100
+        expectTrack.expectedFulfillmentCount = 100
+        expectStart.expectedFulfillmentCount = 100
         player.config.value.random = .track
         player.track.value = prev
         player.track.sink {
             guard $0 != prev else { return }
             prev = $0
-            expect.fulfill()
+            expectTrack.fulfill()
+        }.store(in: &subs)
+        player.start.sink {
+            expectStart.fulfill()
         }.store(in: &subs)
         (0 ..< 100).forEach { _ in
             self.player.trackEnds()
@@ -34,14 +39,19 @@ final class RandomTests: XCTestCase {
         player.track.sink { _ in
             expect.fulfill()
         }.store(in: &subs)
+        player.start.sink {
+            XCTFail()
+        }.store(in: &subs)
         player.trackEnds()
         waitForExpectations(timeout: 1)
     }
     
     func testAlbumOne() {
-        let expect = expectation(description: "")
+        let expectTrack = expectation(description: "")
+        let expectStart = expectation(description: "")
         var prev = Album.mists
-        expect.expectedFulfillmentCount = 100
+        expectTrack.expectedFulfillmentCount = 100
+        expectStart.expectedFulfillmentCount = 100
         player.config.value.random = .album
         player.config.value.purchases.insert(Album.melancholy.purchase)
         player.track.value = Album.mists.tracks.randomElement()!
@@ -51,7 +61,10 @@ final class RandomTests: XCTestCase {
                 album != prev
             else { return }
             prev = album
-            expect.fulfill()
+            expectTrack.fulfill()
+        }.store(in: &subs)
+        player.start.sink {
+            expectStart.fulfill()
         }.store(in: &subs)
         (0 ..< 100).forEach { _ in
             self.player.trackEnds()

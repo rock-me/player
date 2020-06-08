@@ -18,18 +18,25 @@ final class AlbumEndTests: XCTestCase {
         player.track.sink { _ in
             expect.fulfill()
         }.store(in: &subs)
+        player.start.sink {
+            XCTFail()
+        }.store(in: &subs)
         player.trackEnds()
         waitForExpectations(timeout: 1)
     }
     
     func testLoop() {
-        let expect = expectation(description: "")
+        let expectTrack = expectation(description: "")
+        let expectStart = expectation(description: "")
         player.config.value.trackEnds = .next
         player.config.value.albumEnds = .loop
         player.track.value = Album.mists.tracks[Album.mists.tracks.count - 1]
         player.track.sink {
             guard $0 == Album.mists.tracks[0] else { return }
-            expect.fulfill()
+            expectTrack.fulfill()
+        }.store(in: &subs)
+        player.start.sink {
+            expectStart.fulfill()
         }.store(in: &subs)
         player.trackEnds()
         waitForExpectations(timeout: 1)
@@ -43,40 +50,52 @@ final class AlbumEndTests: XCTestCase {
         player.track.sink { _ in
             expect.fulfill()
         }.store(in: &subs)
+        player.start.sink {
+            XCTFail()
+        }.store(in: &subs)
         player.trackEnds()
         waitForExpectations(timeout: 1)
     }
     
     func testNextForward() {
-        let expect = expectation(description: "")
+        let expectTrack = expectation(description: "")
+        let expectStart = expectation(description: "")
         player.config.value.trackEnds = .next
         player.config.value.albumEnds = .next
         player.config.value.purchases.insert(Album.melancholy.purchase)
         player.track.value = Album.mists.tracks[Album.mists.tracks.count - 1]
         player.track.sink {
             guard $0 == Album.melancholy.tracks[0] else { return }
-            expect.fulfill()
+            expectTrack.fulfill()
+        }.store(in: &subs)
+        player.start.sink {
+            expectStart.fulfill()
         }.store(in: &subs)
         player.trackEnds()
         waitForExpectations(timeout: 1)
     }
     
     func testNextForwardAhead() {
-        let expect = expectation(description: "")
+        let expectTrack = expectation(description: "")
+        let expectStart = expectation(description: "")
         player.config.value.trackEnds = .next
         player.config.value.albumEnds = .next
         player.config.value.purchases.insert(Album.tension.purchase)
         player.track.value = Album.mists.tracks[Album.mists.tracks.count - 1]
         player.track.sink {
             guard $0 == Album.tension.tracks[0] else { return }
-            expect.fulfill()
+            expectTrack.fulfill()
+        }.store(in: &subs)
+        player.start.sink {
+            expectStart.fulfill()
         }.store(in: &subs)
         player.trackEnds()
         waitForExpectations(timeout: 1)
     }
     
     func testNextMany() {
-        let expect = expectation(description: "")
+        let expectTrack = expectation(description: "")
+        let expectStart = expectation(description: "")
         player.config.value.trackEnds = .next
         player.config.value.albumEnds = .next
         player.config.value.purchases.insert(Album.melancholy.purchase)
@@ -85,7 +104,10 @@ final class AlbumEndTests: XCTestCase {
         player.track.value = Album.mists.tracks[Album.mists.tracks.count - 1]
         player.track.sink {
             guard $0 == Album.melancholy.tracks[0] else { return }
-            expect.fulfill()
+            expectTrack.fulfill()
+        }.store(in: &subs)
+        player.start.sink {
+            expectStart.fulfill()
         }.store(in: &subs)
         player.trackEnds()
         waitForExpectations(timeout: 1)
@@ -100,18 +122,25 @@ final class AlbumEndTests: XCTestCase {
         player.track.sink { _ in
             expect.fulfill()
         }.store(in: &subs)
+        player.start.sink {
+            XCTFail()
+        }.store(in: &subs)
         player.trackEnds()
         waitForExpectations(timeout: 1)
     }
     
     func testNextBackwards() {
-        let expect = expectation(description: "")
+        let expectTrack = expectation(description: "")
+        let expectStart = expectation(description: "")
         player.config.value.trackEnds = .next
         player.config.value.albumEnds = .next
         player.track.value = Album.tension.tracks[Album.tension.tracks.count - 1]
         player.track.sink {
             guard $0 == Album.mists.tracks[0] else { return }
-            expect.fulfill()
+            expectTrack.fulfill()
+        }.store(in: &subs)
+        player.start.sink {
+            expectStart.fulfill()
         }.store(in: &subs)
         player.trackEnds()
         waitForExpectations(timeout: 1)

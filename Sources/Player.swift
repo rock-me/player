@@ -2,6 +2,7 @@ import Foundation
 import Combine
 
 public final class Player {
+    public var start = PassthroughSubject<Void, Never>()
     public var config = CurrentValueSubject<Config, Never>(.init())
     public var track = CurrentValueSubject<Track, Never>(.satieGymnopedies)
     public var previousable = CurrentValueSubject<Bool, Never>(false)
@@ -23,14 +24,17 @@ public final class Player {
                 break
             case .loop:
                 track.value = track.value
+                start.send()
             case .next:
                 nextTrack()
             }
         case .track:
             track.value = track.value.album.tracks.filter { $0 != track.value }.randomElement()!
+            start.send()
         case .album:
             Album.allCases.filter { config.value.purchases.contains($0.purchase) }.filter { $0 != track.value.album }.randomElement().map {
                 track.value = $0.tracks.randomElement()!
+                start.send()
             }
         }
     }
@@ -49,6 +53,7 @@ public final class Player {
             break
         case .loop:
             track.value = track.value.album.tracks[0]
+            start.send()
         case .next:
             nextAlbum()
         }
@@ -57,6 +62,7 @@ public final class Player {
     private func nextTrack() {
         if nextable.value {
             next()
+            start.send()
         } else {
             albumEnds()
         }
@@ -66,6 +72,7 @@ public final class Player {
         {
             ($0.first { $0.index > track.value.album.index } ?? $0.first).map {
                 track.value = $0.tracks[0]
+                start.send()
             }
         } (Album.allCases.filter { config.value.purchases.contains($0.purchase) }.filter { $0 != track.value.album })
     }
