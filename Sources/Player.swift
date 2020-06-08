@@ -4,14 +4,14 @@ import Combine
 public final class Player {
     public var config = CurrentValueSubject<Config, Never>(.init())
     public var track = CurrentValueSubject<Track, Never>(.satieGymnopedies)
-    public var backable = CurrentValueSubject<Bool, Never>(false)
-    public var forwardable = CurrentValueSubject<Bool, Never>(false)
+    public var previousable = CurrentValueSubject<Bool, Never>(false)
+    public var nextable = CurrentValueSubject<Bool, Never>(false)
     private var subs = Set<AnyCancellable>()
     
     public init() {
         track.sink { [weak self] in
-            self?.backable.value = $0.index > 0
-            self?.forwardable.value = $0.index < $0.album.tracks.count - 1
+            self?.previousable.value = $0.index > 0
+            self?.nextable.value = $0.index < $0.album.tracks.count - 1
         }.store(in: &subs)
     }
     
@@ -35,7 +35,7 @@ public final class Player {
         }
     }
     
-    public func back() {
+    public func previous() {
         track.value = track.value.previous
     }
     
@@ -55,7 +55,7 @@ public final class Player {
     }
     
     private func nextTrack() {
-        if forwardable.value {
+        if nextable.value {
             next()
         } else {
             albumEnds()
