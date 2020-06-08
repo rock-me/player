@@ -54,8 +54,37 @@ public enum Track: UInt8, CaseIterable, Codable {
         }
     }
     
-    public var composer: String {
-        "track_\(self)_composer"
+    public var composer: Composer {
+        switch self {
+        case .satieGymnopedies:
+            return .satie
+        case .mozartSymphony40,
+             .mozartEineKleineNachtmusik,
+             .mozartPrague,
+             .mozartPianoConcerto23,
+             .mozartRequiem,
+             .mozartSymphony1,
+             .mozartPianoSonata11,
+             .mozartPianoConcerto20,
+             .mozartElviraMadigan,
+             .mozartPianoConcerto22,
+             .mozartFantasia:
+            return .mozart
+        case .beethovenMoonlightSonata,
+             .beethovenPathetique,
+             .beethovenSymphony2,
+             .beethovenSymphony9,
+             .beethovenPianoSonata1,
+             .beethovenPianoConcerto3,
+             .beethovenSymphony7,
+             .beethovenSymphony5,
+             .beethovenFurElise:
+            return .beethoven
+        case .brahmsSymphony3:
+            return .brahms
+        case .debussyClairDeLune:
+            return .debussy
+        }
     }
     
     public var title: String {
