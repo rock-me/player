@@ -1,6 +1,6 @@
 import Foundation
 
-public enum Composer {
+public enum Composer: CaseIterable {
     case
     satie,
     mozart,
