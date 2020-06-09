@@ -48,7 +48,7 @@ public enum Album: UInt8, Codable, CaseIterable {
     }
     
     public var purchase: String {
-        "rock.me.album.\(self)"
+        "amadeus.album.\(self)"
     }
     
     public var title: String {
