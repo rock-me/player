@@ -89,13 +89,13 @@ public enum Track: UInt8, CaseIterable, Codable {
         case .mozartElviraMadigan: return 396.8783673469388
         case .mozartPianoConcerto22: return 617.0122448979591
         case .mozartFantasia: return 376.9469387755102
-        case .beethovenMoonlightSonata: return 367.6473469387755
+        case .beethovenMoonlightSonata: return 856.9730612244898
         case .beethovenPathetique: return 296.0195918367347
         case .beethovenSymphony2: return 619.075918367347
         case .beethovenSymphony9: return 928.0522448979592
         case .beethovenPianoSonata1: return 299.04979591836735
         case .beethovenPianoConcerto3: return 577.0710204081632
-        case .beethovenSymphony7: return 856.9730612244898
+        case .beethovenSymphony7: return 482.0897959183674
         case .beethovenSymphony5: return 424.7248979591837
         case .beethovenFurElise: return 173.00897959183675
         case .brahmsSymphony3: return 547.1085714285714
