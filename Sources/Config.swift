@@ -7,7 +7,7 @@ public struct Config: Codable, Equatable {
     public var random = Random.none
     public var notifications = true
     public var rated = false
-    public let created = Date()
+    public var created = Date()
     
     public func hash(into: inout Hasher) { }
     
